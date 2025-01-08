@@ -13,6 +13,7 @@ vector for tokens. */
 Token getNextToken(std::ifstream &fileStream) {
     char ch;
     Token token;
+    token.text.clear();
     while(fileStream.get(ch)) {
         if(std::isspace(ch)) {
             // ignore empty spaces
@@ -41,10 +42,14 @@ Token getNextToken(std::ifstream &fileStream) {
         // checking for numbers
         if(std::isdigit(ch)) {
             token.text = ch;
-            while(std::isdigit(ch) && fileStream.get(ch)) {
-                token.text += ch;
+            while(fileStream.get(ch)) {
+                if(std::isdigit(ch)) {
+                    token.text += ch;
+                } else {
+                    fileStream.unget();
+                    break;
+                }
             }
-            fileStream.unget();
             token.type = TOKEN_NUMBER;
             return token;
         }
@@ -53,6 +58,17 @@ Token getNextToken(std::ifstream &fileStream) {
         switch(ch) {
             case '=':
                 token.text = "=";
+                // checking for `==` token
+                if(fileStream.get(ch)) {
+                    if(ch == '=') {
+                        // add the second `=`
+                        token.text += ch;
+                        token.type = TOKEN_EQUAL;
+                        return token;
+                    } else {
+                        fileStream.unget();
+                    }
+                }
                 token.type = TOKEN_ASSIGN;
                 return token;
             case '+':
@@ -76,7 +92,6 @@ Token getNextToken(std::ifstream &fileStream) {
                 token.type = TOKEN_SEMICOLON;
                 return token;
             default:
-                std::cerr << "Warning: Unrecognized character: " << ch << std::endl;
                 break;
         }
     }

@@ -8,11 +8,11 @@
 int main() {
 
     std::vector<Token> tokens;
-    const std::string file = "./data/prog.sl";
+    const std::string file = "./data/if.sl";
     tokens = tokenizeFile(file);
 
     for(auto t: tokens) {
-        std::cout << t.text << t.type << std::endl;
+        std::cout << t.text << "  <<>>  " << t.type << std::endl;
     }
     return 0;
     
