@@ -58,15 +58,12 @@ Token getNextToken(std::ifstream &fileStream) {
         switch(ch) {
             case '=':
                 token.text = "=";
-                // checking for `==` token
                 if(fileStream.get(ch)) {
+                    // checking for `==` for `if` conditions`
                     if(ch == '=') {
-                        // add the second `=`
                         token.text += ch;
                         token.type = TOKEN_EQUAL;
                         return token;
-                    } else {
-                        fileStream.unget();
                     }
                 }
                 token.type = TOKEN_ASSIGN;
