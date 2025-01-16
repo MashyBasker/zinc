@@ -88,6 +88,14 @@ Token getNextToken(std::ifstream &fileStream) {
                 token.text = ";";
                 token.type = TOKEN_SEMICOLON;
                 return token;
+            case '{':
+                token.text = "{";
+                token.type = TOKEN_LBRACE;
+                return token;
+            case '}':
+                token.text = "}";
+                token.type = TOKEN_RBRACE;
+                return token;
             default:
                 break;
         }

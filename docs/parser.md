@@ -29,3 +29,12 @@ A left recursion is a grammar which looks like this:
 $T \rightarrow T V | d$
 
 This causes an infinite loop.
+
+int a;
+int b;
+int c;
+int d;
+a = 3;
+b = 4;
+c = 0;
+d = 44;

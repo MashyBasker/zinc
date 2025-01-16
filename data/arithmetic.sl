@@ -1,8 +1,6 @@
 int a;
-int b;
+a = 5;
 int c;
+c = a + 7;
 
-a = 32;
-b = 9;
-
-c = a - b + 4;
+if(a == 5) { a = a + 1; }

@@ -18,12 +18,25 @@ ASTNode parseProgram(Parser &parser) {
 }
 
 ASTNode parseStatementList(Parser &parser) {
-    // <statement_list> ::= <statement> <statement_list> | E
-    ASTNode node = {"statement_list", {}, ""};
-    while(parser.currIndex < (*parser.tokens).size()) {
-        node.children["statements"].push_back(parseStatement(parser));
+    std::vector<ASTNode> statements;
+
+    // Continue parsing until a '}' or EOF is encountered
+    while (parser.currIndex < (*parser.tokens).size() &&
+           (*parser.tokens)[parser.currIndex].text != "}") {
+        // Parse the current statement
+        statements.push_back(parseStatement(parser));
     }
-    return node;
+
+    // // After parsing, check if we've encountered a '}' and move past it
+    // if (parser.currIndex < (*parser.tokens).size() && (*parser.tokens)[parser.currIndex].text == "}") {
+    //     parser.currIndex++;  // Move past '}'
+    // } else if (parser.currIndex >= (*parser.tokens).size()) {
+    //     // If we reached the end of the token list without encountering '}', throw an error
+    //     throw std::runtime_error("Unexpected end of input: expected '}'");
+    // }
+
+    // Return the list of statements as part of the statement_list node
+    return ASTNode{"statement_list", {{"statements", statements}}, ""};
 }
 
 void displayAST(const ASTNode &node, int indentLevel = 0) {
@@ -63,7 +76,7 @@ ASTNode parseStatement(Parser &parser){
         parser.currIndex++;
         return ASTNode{"eof", {}, ""};
     } else {
-        throw std::runtime_error("Syntax error: Unexpected token '" + (*parser.tokens)[parser.currIndex].text);
+        throw std::runtime_error("Syntax error: Unexpected token '" + (*parser.tokens)[parser.currIndex].text + "'");
     }
 }
 
@@ -165,18 +178,28 @@ ASTNode parseConditional(Parser &parser) {
         throw std::runtime_error("Expected 'if' got '" + (*parser.tokens)[parser.currIndex].text + "'");
     }
     parser.currIndex++;
+
     if((*parser.tokens)[parser.currIndex].text != "(") {
         throw std::runtime_error("Expected '(' got '" + (*parser.tokens)[parser.currIndex].text + "'");
     }
     parser.currIndex++;
+
     ASTNode condition = parseCondition(parser);
+
+    if((*parser.tokens)[parser.currIndex].text != ")") {
+        throw std::runtime_error("Expected ')' got '" + (*parser.tokens)
+        [parser.currIndex].text + "'");
+    }
+    parser.currIndex++;
     if((*parser.tokens)[parser.currIndex].text != "{") {
         throw std::runtime_error("Expected '{' got '" + (*parser.tokens)[parser.currIndex].text + "'");
     }
     parser.currIndex++;
+
     ASTNode body = parseStatementList(parser);
+
     if((*parser.tokens)[parser.currIndex].text != "}") {
-        throw std::runtime_error("Expected '{' got '" + (*parser.tokens)[parser.currIndex].text + "'");
+        throw std::runtime_error("Expected '}' got '" + (*parser.tokens)[parser.currIndex].text + "'");
     }
     parser.currIndex++;
     return {
