@@ -1,6 +1,10 @@
 int a;
-a = 5;
+int b;
 int c;
-c = a + 7;
+a = 5;
+b = 6;
+c = a + b;
 
-if(a == 5) { a = a + 1; }
+if(c == 11) {
+    a = a + 1;
+}

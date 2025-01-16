@@ -29,10 +29,14 @@ int main(int argc, char *argv[]) {
     Parser parser;
     parser.setTokens(tokens);
 
+    for(auto t: tokens) {
+        std::cout << t.text << " <--> " << t.type << std::endl;
+    }
+
     try {
 
         ASTNode ast = parseProgram(parser);
-        // displayAST(ast, 0);
+        displayAST(ast, 0);
         auto assembly = generateProgram(ast);
         std::ofstream outFile(outfile);
         if (!outFile) {
