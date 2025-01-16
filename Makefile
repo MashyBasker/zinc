@@ -1,2 +1,2 @@
 run:
-	g++ -Wall src/lexer.cpp src/parser.cpp src/main.cpp -o simp
+	g++ -Wall src/lexer.cpp src/parser.cpp src/codegen.cpp src/main.cpp -o simp
