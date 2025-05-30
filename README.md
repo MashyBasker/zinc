@@ -1,6 +1,6 @@
-# Simple Lang Compiler
+# Zinc Compiler
 
-This repository contains the implementation of a compiler for SimpleLang, a custom-designed programming language. The compiler translates SimpleLang code into assembly code for an 8-bit CPU.
+This repository contains the implementation of a compiler for Zinc, a custom-designed programming language. The compiler translates Zinc code into assembly code for an 8-bit CPU.
 
 ## Project structure
 
