@@ -1,6 +1,6 @@
 # Lexer/Tokenizer
 
-The tokens for the Simple Lang constructs will be
+The tokens for the Zinc language will be
 
 ```
 TOKEN_IDENTIFIER
