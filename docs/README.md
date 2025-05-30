@@ -1,3 +1,3 @@
 # Documentation
 
-Adding documentation and implementation details for Simple Lang
+Adding documentation and implementation details for Zinc
